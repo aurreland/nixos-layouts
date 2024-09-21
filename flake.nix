@@ -4,9 +4,6 @@
   inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05";
 
   outputs = {self, nixpkgs}: {
-    nixosModules = {
-      layouts = import ./module.nix;
-    };
     lib = let
       inherit (nixpkgs.lib.attrset) filterAttrs;
       jsonFiles = builtins.map (file: ./layouts + "/${file}") (builtins.attrNames (builtins.readDir ./layouts));

@@ -25,8 +25,5 @@ let
 
   convert = layout: keycode: filterAttrs (_name: value: value == keycode) (getLayout layout);
 in {
-  config = {
-    convertKeycode = layout: keycode: getAttrName (convert layout keycode);
-    convertLayout = fromLayout: toLayout: keyname: getAttrName (convert toLayout (getKeycode fromLayout keyname));
-  };
+
 }

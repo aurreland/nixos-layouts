@@ -5,7 +5,7 @@
 
   outputs = {self, nixpkgs}: {
     lib = let
-      inherit (nixpkgs.lib.attrset) filterAttrs;
+      inherit (nixpkgs.lib.attrsets) filterAttrs;
       jsonFiles = builtins.map (file: ./layouts + "/${file}") (builtins.attrNames (builtins.readDir ./layouts));
       layouts = builtins.listToAttrs (map (file: {
           name = builtins.replaceStrings [".json"] [""] (builtins.baseNameOf file);

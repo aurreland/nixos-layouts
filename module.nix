@@ -1,4 +1,5 @@
-{pkgs, ...}: let
+let
+  # Lib Functions using only builtins without importing nixpkgs
   nameValuePair = name: value: {inherit name value;};
 
   filterAttrs = pred: set:
@@ -8,6 +9,7 @@
       if pred name v
       then [(nameValuePair name v)]
       else []) (builtins.attrNames set));
+
 
   jsonFiles = builtins.map (file: ./layouts + "/${file}") (builtins.attrNames (builtins.readDir ./layouts));
 
@@ -19,6 +21,7 @@
 
   getLayout = layout: builtins.getAttr layout layouts;
   getAttrName = list: builtins.toString (builtins.head (builtins.attrNames list));
+  getKeycode = layout: keyname: builtins.getAttr (filterAttrs (name: _value: name == keyname) (getLayout layout));
 
   convert = layout: keycode: filterAttrs (_name: value: value == keycode) (getLayout layout);
 in {
